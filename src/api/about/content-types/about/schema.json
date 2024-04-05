@@ -28,6 +28,12 @@
     },
     "biography": {
       "type": "richtext"
+    },
+    "titleEng": {
+      "type": "string"
+    },
+    "biographyEng": {
+      "type": "richtext"
     }
   }
 }

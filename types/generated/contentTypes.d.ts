@@ -803,6 +803,8 @@ export interface ApiAboutAbout extends Schema.SingleType {
     title: Attribute.String;
     image: Attribute.Media;
     biography: Attribute.RichText;
+    titleEng: Attribute.String;
+    biographyEng: Attribute.RichText;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -827,13 +829,14 @@ export interface ApiContactContact extends Schema.SingleType {
     singularName: 'contact';
     pluralName: 'contacts';
     displayName: 'Contact';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     title: Attribute.String;
-    background: Attribute.Media;
+    titleEng: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -883,6 +886,36 @@ export interface ApiGalleryGallery extends Schema.CollectionType {
   };
 }
 
+export interface ApiMainGalleryMainGallery extends Schema.SingleType {
+  collectionName: 'main_galleries';
+  info: {
+    singularName: 'main-gallery';
+    pluralName: 'main-galleries';
+    displayName: 'MainGallery';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    photo: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::main-gallery.main-gallery',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::main-gallery.main-gallery',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -904,6 +937,7 @@ declare module '@strapi/types' {
       'api::about.about': ApiAboutAbout;
       'api::contact.contact': ApiContactContact;
       'api::gallery.gallery': ApiGalleryGallery;
+      'api::main-gallery.main-gallery': ApiMainGalleryMainGallery;
     }
   }
 }
